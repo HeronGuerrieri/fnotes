@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
@@ -10,16 +11,31 @@ class BaseScreen extends StatefulWidget {
 class _BaseScreenState extends State<BaseScreen> {
   int _selectedIndex = 0;
 
-  final _pages = [
-    const Center(child: Text('Home')),
-    const Center(child: Text('Notes')),
-    const Center(child: Text('Settings')),
-  ];
+  late final List<Widget> _pages;
 
   selectedIndex(int value) {
     setState(() {
       _selectedIndex = value;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Inicialize outras variáveis aqui se necessário
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Inicialize a lista _pages dentro de didChangeDependencies
+    _pages = [
+      Center(child: Text(AppLocalizations.of(context)!.home)),
+      Center(child: Text(AppLocalizations.of(context)!.notes)),
+      Center(child: Text(AppLocalizations.of(context)!.new_note)),
+      Center(child: Text(AppLocalizations.of(context)!.folder)),
+      Center(child: Text(AppLocalizations.of(context)!.settings)),
+    ];
   }
 
   @override
@@ -42,6 +58,15 @@ class _BaseScreenState extends State<BaseScreen> {
               NavigationRailDestination(
                 icon: Icon(Icons.note),
                 label: Text('Notes'),
+              ),
+              // New Note
+              NavigationRailDestination(
+                icon: Icon(Icons.note_add),
+                label: Text('New Note'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.folder),
+                label: Text('Folder'),
               ),
               NavigationRailDestination(
                 icon: Icon(Icons.settings),
